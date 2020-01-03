@@ -11,6 +11,37 @@ public class SimpleHTTPServer {
 
 }
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
+public class SimpleHTTPServer {
+
+    public static void main(String args[] ) throws IOException {
+
+        ServerSocket server = new ServerSocket(90);
+        System.out.println("Listening for connection on port 90 ....");
+        while (true) {
+            Socket clientSocket = server.accept();
+            InputStreamReader isr =  new InputStreamReader(clientSocket.getInputStream());
+            BufferedReader reader = new BufferedReader(isr);
+            String line = reader.readLine();            
+            while (!line.isEmpty()) {
+                System.out.println(line);
+                line = reader.readLine();
+            }
+        }
+    }
+
+}
+Listening for connection on port 90 .... GET / HTTP/1.1 Host: localhost:90 User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8 Accept-Language: en-US,en;q=0.5 Accept-Encoding: gzip, deflate Connection: keep-alive
+
+import java.io.IOException; import java.net.ServerSocket; import java.net.Socket; import java.util.Date;
+
+public class SimpleHTTPServer { public static void main(String args[]) throws IOException { ServerSocket server = new ServerSocket(8080); System.out.println("Listening for connection on port 8080 ...."); while (true) { try (Socket socket = server.accept()) { Date today = new Date(); String httpResponse = "HTTP/1.1 200 OK\r\n\r\n" + today; socket.getOutputStream().write(httpResponse.getBytes("UTF-8")); } } } }
+
+ServerSocket( 90 , 12)
 
 http://localhost:90
 should work
